@@ -37,6 +37,9 @@
             'distance_to_center' => 50
         ],
     ];
+
+    $parking = $_GET['parking'] ?? 'all';
+    $vote = $_GET['vote'] ?? 'nobody';
 ?>
 
 <!DOCTYPE html>
@@ -50,6 +53,17 @@
 </head>
 <body>
     <h1 class="text-center my-3">Hotels Description</h1>
+    <form action="index.php" method="GET">
+        <label for="parking">Parking:</label>
+        <select id="parking" name="parking">
+            <option selected="selected" value="all">All</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        <label for="vote">Vote:</label>
+        <input type="number" name="vote" id="vote" min="0" max="5">
+        <button type="submit">Vai!</button>
+    </form>
     <table class="table">
         <thead>
             <tr>
@@ -65,19 +79,22 @@
             // per ogni hotel
             foreach($hotels as $hotel){
                 echo '<tr>';
-                // per ogni coppia chiave valore di ciascun hotel
-                foreach($hotel as $key => $value){
-                    if($key === 'parking' && $value === true){
-                        echo "<td>yes</td>";
-                    } elseif ($key === 'parking' && $value === false) {
-                        echo "<td>no</td>";
-                    } elseif ($key === 'vote'){
-                        echo "<td>$value/5</td>";
-                    } elseif ($key === 'distance_to_center'){
-                        echo "<td>$value km</td>";
+                if(($hotel['parking'] === true && $parking === 'yes') || ($hotel['parking'] === false && $parking === 'no') || $parking === 'all'){
+                    if($vote === '' || $vote === 'nobody' || ($hotel['vote'] === 0 && $vote === '0') || ($hotel['vote'] === 1 && $vote === '1') || ($hotel['vote'] === 2 && $vote === '2') || ($hotel['vote'] === 3 && $vote === '3') || ($hotel['vote'] === 4 && $vote === '4') || ($hotel['vote'] === 5 && $vote === '5')){
+                    // per ogni coppia chiave valore di ciascun hotel
+                    foreach($hotel as $key => $value){
+                        if($key === 'parking' && $value === true){
+                            echo "<td>yes</td>";
+                        } elseif ($key === 'parking' && $value === false) {
+                            echo "<td>no</td>";
+                        } elseif ($key === 'vote'){
+                            echo "<td>$value/5</td>";
+                        } elseif ($key === 'distance_to_center'){
+                            echo "<td>$value km</td>";
+                        } else {
+                            echo "<td>$value</td>";
+                        }
                     }
-                    else{
-                        echo "<td>$value</td>";
                     }
                 }
                 echo '</tr>';
