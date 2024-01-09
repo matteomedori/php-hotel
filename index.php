@@ -38,6 +38,7 @@
         ],
     ];
 
+    // variabili che salvano i valori inseriti dall'utente per filtrare gli hotel
     $parking = $_GET['parking'] ?? 'all';
     $vote = $_GET['vote'] ?? 'nobody';
 ?>
@@ -62,7 +63,7 @@
         </select>
         <label for="vote">Vote:</label>
         <input type="number" name="vote" id="vote" min="0" max="5">
-        <button type="submit">Vai!</button>
+        <button type="submit">Filtra</button>
     </form>
     <table class="table">
         <thead>
@@ -81,7 +82,7 @@
                 echo '<tr>';
                 if(($hotel['parking'] === true && $parking === 'yes') || ($hotel['parking'] === false && $parking === 'no') || $parking === 'all'){
                     if($vote === '' || $vote === 'nobody' || ($hotel['vote'] === 0 && $vote === '0') || ($hotel['vote'] === 1 && $vote === '1') || ($hotel['vote'] === 2 && $vote === '2') || ($hotel['vote'] === 3 && $vote === '3') || ($hotel['vote'] === 4 && $vote === '4') || ($hotel['vote'] === 5 && $vote === '5')){
-                    // per ogni coppia chiave valore di ciascun hotel
+                    // per ogni coppia chiave valore di ciascun hotel che soddisfa una delle condizioni
                     foreach($hotel as $key => $value){
                         if($key === 'parking' && $value === true){
                             echo "<td>yes</td>";
