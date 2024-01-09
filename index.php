@@ -1,4 +1,5 @@
 <?php
+    // variabile che contiene le info sugli hotel
     $hotels = [
         [
             'name' => 'Hotel Belvedere',
@@ -44,21 +45,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP Hotel</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-    <?php 
-        foreach($hotels as $hotel){
-            foreach($hotel as $key => $value){
-                if($key === 'parking' && $value === true){
-                    echo 'parking: yes <br>';
-                } elseif ($key === 'parking' && $value === false) {
-                    echo 'parking: no <br>';
-                }else{
-                    echo("$key: $value <br>");
+    <h1 class="text-center my-3">Hotels Description</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <?php 
+                foreach($hotels[0] as $key => $value){
+                    echo "<th scope=\"col\">$key</th>";
                 }
+                ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            // per ogni hotel
+            foreach($hotels as $hotel){
+                echo '<tr>';
+                // per ogni coppia chiave valore di ciascun hotel
+                foreach($hotel as $key => $value){
+                    if($key === 'parking' && $value === true){
+                        echo "<td>yes</td>";
+                    } elseif ($key === 'parking' && $value === false) {
+                        echo "<td>no</td>";
+                    } elseif ($key === 'vote'){
+                        echo "<td>$value/5</td>";
+                    } elseif ($key === 'distance_to_center'){
+                        echo "<td>$value km</td>";
+                    }
+                    else{
+                        echo "<td>$value</td>";
+                    }
+                }
+                echo '</tr>';
             }
-            echo('<hr>');
-        }
-    ?>
+            ?>
+        </tbody>
+    </table>
 </body>
 </html>
